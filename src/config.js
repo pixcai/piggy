@@ -33,7 +33,7 @@ module.exports = {
   },
 
   // Database
-  databaseUrl: process.env.DATABASE_URL || 'mysql://localhost',
+  databaseUrl: process.env.DATABASE_URL || 'mysql://localhost/piggy',
 
   // Web analytics
   analytics: {

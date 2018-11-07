@@ -13,7 +13,6 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
 import jwt from 'jsonwebtoken';
-import nodeFetch from 'node-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
@@ -117,9 +116,8 @@ app.get('*', async (req, res, next) => {
     };
 
     // Universal HTTP client
-    const fetch = createFetch(nodeFetch, {
-      baseUrl: config.api.serverUrl,
-      cookie: req.headers.cookie,
+    const fetch = createFetch({
+      baseURL: config.api.serverUrl,
     });
 
     // Global (context) variables that can be easily accessed from any React component

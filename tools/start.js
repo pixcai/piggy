@@ -14,6 +14,7 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import errorOverlayMiddleware from 'react-dev-utils/errorOverlayMiddleware';
+import dotenv from 'dotenv';
 import webpackConfig from './webpack.config';
 import run, { format } from './run';
 import clean from './clean';
@@ -70,6 +71,7 @@ async function start() {
   server.use(errorOverlayMiddleware());
   server.use(express.static(path.resolve(__dirname, '../public')));
 
+  dotenv.config();
   // Configure client-side hot module replacement
   const clientConfig = webpackConfig.find(config => config.name === 'client');
   clientConfig.entry.client = ['./tools/lib/webpackHotDevClient']
