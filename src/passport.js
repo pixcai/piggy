@@ -14,8 +14,30 @@
  */
 
 import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
 import { User } from './data/models';
-import config from './config';
 
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+    },
+    (username, password, done) => {
+      User.findOne({ where: { email: username } }, (err, user) => {
+        if (err) {
+          return done(err);
+        }
+        if (!user) {
+          return done(null, false, { message: '账号或密码错误' });
+        }
+        if (!user.authenticate(password)) {
+          return done(null, false, { message: '账号或密码错误' });
+        }
+        return done(null, user);
+      });
+    },
+  ),
+);
 
 export default passport;
