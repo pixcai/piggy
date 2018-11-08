@@ -17,11 +17,30 @@ class Register extends React.Component {
     title: PropTypes.string.isRequired,
   };
 
+  static contextTypes = {
+    fetch: PropTypes.func.isRequired,
+    pathname: PropTypes.string.isRequired,
+    query: PropTypes.object,
+  };
+
+  onSignup = () => {
+    this.context.fetch({
+      method: 'post',
+      url: '/api/register',
+      data: {
+        username: 'root',
+        email: 'root@admin.com',
+        password: '123456',
+      },
+    });
+  };
+
   render() {
     return (
       <div className={s.root}>
         <div className={s.container}>
           <h1>{this.props.title}</h1>
+          <button onClick={this.onSignup}>Sign up</button>
         </div>
       </div>
     );

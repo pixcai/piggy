@@ -33,17 +33,14 @@ const User = Model.define(
       validate: { isEmail: true },
     },
 
-    password_hash: {
+    password: {
       type: DataType.STRING,
-      allowNull: false,
+      set: val => this.setDataValue('password', this.genPasswordHash(val)),
     },
 
-    password: {
-      type: DataType.VIRTUAL,
-      set: val => {
-        this.setDataValue('password', val);
-        this.setDataValue('password_hash', this.genPasswordHash(val));
-      },
+    role: {
+      type: DataType.INTEGER,
+      defaultValue: 0,
     },
 
     salt: {
@@ -58,7 +55,7 @@ const User = Model.define(
     updatedAt: true,
     validate: {
       authenticate(password) {
-        return this.genPasswordHash(password) === this.password_hash;
+        return this.genPasswordHash(password) === this.password;
       },
       genPasswordHash(password) {
         const hash = crypto.createHmac('sha1', this.salt).update(password);
