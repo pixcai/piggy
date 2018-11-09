@@ -20,7 +20,7 @@
 
 .container {
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 10px 0;
   max-width: var(--max-content-width);
 }
 
@@ -32,23 +32,4 @@
 
 .brandTxt {
   margin-left: 10px;
-}
-
-.banner {
-  text-align: center;
-}
-
-.bannerTitle {
-  margin: 0;
-  padding: 10px;
-  font-weight: normal;
-  font-size: 4em;
-  line-height: 1em;
-}
-
-.bannerDesc {
-  padding: 0;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 1.25em;
-  margin: 0;
 }

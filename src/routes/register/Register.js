@@ -23,14 +23,11 @@ class Register extends React.Component {
     query: PropTypes.object,
   };
 
-  onSignup = () => {};
-
   render() {
     return (
       <div className={s.root}>
         <div className={s.container}>
           <h1>{this.props.title}</h1>
-          <button onClick={this.onSignup}>Sign up</button>
         </div>
       </div>
     );
