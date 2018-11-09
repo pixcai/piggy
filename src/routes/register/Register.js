@@ -23,17 +23,7 @@ class Register extends React.Component {
     query: PropTypes.object,
   };
 
-  onSignup = () => {
-    this.context.fetch({
-      method: 'post',
-      url: '/api/register',
-      data: {
-        username: 'root',
-        email: 'root@admin.com',
-        password: '123456',
-      },
-    });
-  };
+  onSignup = () => {};
 
   render() {
     return (

@@ -15,8 +15,8 @@ const User = Model.define(
   'users',
   {
     id: {
-      type: DataType.UUID,
-      defaultValue: DataType.UUIDV1,
+      type: DataType.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
     },
 
@@ -35,7 +35,9 @@ const User = Model.define(
 
     password: {
       type: DataType.STRING,
-      set: val => this.setDataValue('password', this.genPasswordHash(val)),
+      set(value) {
+        this.setDataValue('password', this.genPasswordHash(value));
+      },
     },
 
     role: {
@@ -46,23 +48,24 @@ const User = Model.define(
     salt: {
       type: DataType.STRING,
       allowNull: false,
-      defaultValue: () => Math.round(Date.now() * Math.random()).toString(16),
+      defaultValue: () => crypto.randomBytes(32).toString('hex'),
     },
   },
   {
     indexes: [{ fields: ['username', 'email'] }],
-    createdAt: true,
-    updatedAt: true,
-    validate: {
-      authenticate(password) {
-        return this.genPasswordHash(password) === this.password;
-      },
-      genPasswordHash(password) {
-        const hash = crypto.createHmac('sha1', this.salt).update(password);
-        return hash.digest('hex');
-      },
-    },
+    timestamps: true,
   },
 );
+
+User.prototype.authenticate = function authenticate(password) {
+  return this.genPasswordHash(password) === this.password;
+};
+
+User.prototype.genPasswordHash = function genPasswordHash(password) {
+  return crypto
+    .createHmac('sha1', this.salt)
+    .update(password)
+    .digest('hex');
+};
 
 export default User;
